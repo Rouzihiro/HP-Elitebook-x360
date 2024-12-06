@@ -66,6 +66,9 @@ bindsym $mod+Shift+l exec "i3lock -i ~/Pictures/lock.png && systemctl suspend"
 # Enable tap-to-click for touchpad
 exec --no-startup-id xinput set-prop "ALP001C:00 044E:120A Touchpad" "libinput Tapping Enabled" 1
 
+bindsym XF86MonBrightnessUp exec xbacklight -inc 10  # Increase by 10%
+bindsym XF86MonBrightnessDown exec xbacklight -dec 10  # Decrease by 10%
+
 # Rofi
 # Switch windows
 #bindsym F12 exec "rofi -modi window -show window"
