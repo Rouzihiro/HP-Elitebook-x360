@@ -135,13 +135,17 @@ for_window [class=Nitrogen] focus
 assign [class="LibreWolf"] $ws2
 for_window [class=LibreWolf] focus
 
-assign [class="brave-browser"] $ws2
-for_window [class=brave-browser] focus
+assign [class="Brave-browser"] $ws2
+for_window [class=Brave-browser] focus
 
 # (W-3)
 # ========== Coding ===========
-assign [class="Brave"] $ws3
+assign [class="Brave"] $ws2
 for_window [class=Brave] focus
+
+# JDownloader
+assign [class="org-jdownloader-update-launcher-JDLauncher"] $ws4
+for_window [class="org-jdownloader-update-launcher-JDLauncher"] focus
 
 # (W-4)
 # ========== File Manager ===========
@@ -283,13 +287,15 @@ for_window [class="Nitrogen"] floating enable
 
 # Browser
 bindsym $mod+b exec --no-startup-id "brave-browser"
-#bindsym $mod+Shift+w exec brave
 
 # File Manager
 bindsym $mod+f exec --no-startup-id caja
 
 # PDF Reader Zathura 
 #bindsym $mod+Shift+o exec zathura
+
+# JDownloader
+bindsym $mod+Shift+j exec ~/scripts/jdownloader.sh
 
 # Screenshot : FlameShot
 bindsym Print exec flameshot full --path ~/Pictures/screenshots
@@ -302,12 +308,13 @@ bindsym $mod+Return exec --no-startup-id kitty
 bindsym $mod+Shift+b exec blueman-manager
 
 # Network Manager Applet
-bindsym Mod1+Shift+n exec --no-startup-id nm-applet
+bindsym $mod+Shift+n exec --no-startup-id nm-applet
 
 # Rofi
 bindsym $mod+d exec --no-startup-id rofi -show drun -disable-history -show-icons
 bindsym Mod1+d exec --no-startup-id rofi -show run -disable-history
 bindsym Mod1+w exec rofi -show window -show-icons
+bindsym $mod+w exec rofi -show window -show-icons
 bindsym $mod+i exec rofi -modi emoji -show emoji
 
 # kill focused window
@@ -317,7 +324,6 @@ bindsym $mod+q kill
 #bindsym $mod+Shift+e exec ~/.config/custom_scripts/power.sh
 
 # Lock the system
-#bindsym $mod+Shift+x exec i3lock -i ~/Pictures/backgrounds/VIM.png
 bindsym $mod+Shift+l exec "i3lock -i ~/Pictures/lock.png && systemctl suspend"
 
 # reload the configuration file
