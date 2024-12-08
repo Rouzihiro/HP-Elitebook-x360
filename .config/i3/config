@@ -64,9 +64,6 @@ bindsym $mod+Shift+f exec --no-startup-id ~/scripts/fireplace
 
 #exec --no-startup-id xrandr --output eDP-1 --dpi 180
 
-
-
-
 ###############################
 #         Gaps
 ###############################
@@ -177,6 +174,12 @@ for_window [class=discord] focus
 
 assign [class="Slack"] $ws5
 for_window [class=Slack] focus
+
+assign [class="whatsie"] $ws5
+for_window [class="whatsie"] focused
+
+assign [class="skype" instance="Skype"] $ws5
+for_window [class="skype" instance="Skype"] focus
 
 # (W-6)
 # ========== Graphics Editor ===========
@@ -303,6 +306,12 @@ bindsym $mod+c exec --no-startup-id caja
 # PDF Reader Zathura 
 #bindsym $mod+Shift+o exec zathura
 
+# Network Manager Applet
+bindsym $mod+Shift+s exec --no-startup-id skype
+
+# Whatsapp - whatsie
+bindsym $mod+Shift+w exec --no-startup-id whatsie
+
 # JDownloader
 bindsym $mod+Shift+j exec ~/scripts/jdownloader
 
@@ -384,8 +393,8 @@ exec nitrogen --restore
 # get auth work with polkit
 exec --no-startup-id /usr/lib/mate-polkit/polkit-mate-authentication-agent-1
 
-# redshift
-#exec redshift-gtk
+# redshift - not working yet
+#bindsym $mod+r exec ~/scripts/redlight-i3
 
 # disable capslock
 # exec setxkbmap -option ctrl:nocaps

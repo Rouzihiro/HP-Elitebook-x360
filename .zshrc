@@ -55,9 +55,9 @@ alias ll="eza -lh --icons --grid --group-directories-first"
 alias la="eza -lah --icons --grid --group-directories-first"
 alias ".."="cd .."
 alias cls="clear"
-alias rey-script-permission="zsh ${scripts}/script-folder-permission.sh"
+
 alias md="mkdir"
-alias rey-jdownloader="zsh ${scripts}/jdownloader.sh"
+
 alias rey-weatherHH="curl -4 http://wttr.in/Hamburg"
 alias rey-weather="curl -4 http://wttr.in/"
 
@@ -65,9 +65,11 @@ alias install='sudo apt install'
 alias update='sudo apt update && sudo apt upgrade'
 alias upgrade='sudo apt full-upgrade'
 
+alias cp2='rsync -ah --progress'
 
 # Set up PATH for local scripts
 export PATH="$HOME/.local/bin:$PATH"
+export PATH=$PATH:/snap/bin
 
 # Enable plugins or other custom functions
 # Add custom configurations or functions here
