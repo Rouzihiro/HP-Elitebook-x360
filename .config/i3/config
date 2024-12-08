@@ -43,7 +43,6 @@ default_border pixel 1
 hide_edge_borders both
 
 
-
 #Enable tap-to-click for touchpad
 exec --no-startup-id xinput set-prop "ALP001C:00 044E:120A Touchpad" "libinput Tapping Enabled" 1
 
@@ -53,6 +52,16 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 #Monitor resolution set to 1920x1200
 exec --no-startup-id xrandr --output eDP-1 --mode 1920x1080
+
+bindsym $mod+Shift+h exec --no-startup-id xrandr --output eDP-1 --off --output HDMI-1 --auto
+bindsym $mod+Shift+m exec --no-startup-id xrandr --output eDP-1 --same-as HDMI-1 --auto
+
+#extend Monitor
+#bindsym $mod+Shift+x exec --no-startup-id xrandr --output eDP-1 --auto --output HDMI-1 --right-of eDP-1 --auto
+
+# fireplace
+bindsym $mod+Shift+f exec --no-startup-id ~/scripts/fireplace
+
 #exec --no-startup-id xrandr --output eDP-1 --dpi 180
 
 
@@ -237,13 +246,13 @@ for_window [class=pavucontrol] focus
 ##############################
 
 # split in horizontal orientation
-bindsym $mod+Shift+h split h
+bindsym $mod+Shift+z split h
 
 # split in vertical orientation
 bindsym $mod+Shift+v split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+Shift+f fullscreen toggle
+bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 # bindsym $mod+s layout stacking
@@ -289,13 +298,13 @@ for_window [class="Nitrogen"] floating enable
 bindsym $mod+b exec --no-startup-id "brave-browser"
 
 # File Manager
-bindsym $mod+f exec --no-startup-id caja
+bindsym $mod+c exec --no-startup-id caja
 
 # PDF Reader Zathura 
 #bindsym $mod+Shift+o exec zathura
 
 # JDownloader
-bindsym $mod+Shift+j exec ~/scripts/jdownloader.sh
+bindsym $mod+Shift+j exec ~/scripts/jdownloader
 
 # Screenshot : FlameShot
 bindsym Print exec flameshot full --path ~/Pictures/screenshots

@@ -35,6 +35,8 @@ export scripts="$HOME/scripts"      # Path to your scripts folder
 export host="rey"         # Replace with your actual hostname
 export username="rey"     # Replace with your actual username
 
+export PATH="$HOME/scripts:$PATH"
+
 # Enable some helpful zsh options
 setopt autocd
 setopt correct
