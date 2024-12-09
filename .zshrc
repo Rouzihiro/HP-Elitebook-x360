@@ -80,4 +80,3 @@ export EDITOR="nvim"
 
 # Source other configurations if needed (e.g., for zsh themes or plugins)
 # source $ZSH/oh-my-zsh.sh
-

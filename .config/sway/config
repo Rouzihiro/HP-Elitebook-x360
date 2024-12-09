@@ -16,6 +16,40 @@ for_window [class="^.*"] border pixel 1
 title_align center
 ######################################
 
+input "type:touchpad" {
+    dwt enabled
+    tap enabled
+    middle_emulation enabled
+    natural_scroll enabled 
+}
+
+#Enable touch screen (if available)
+input "Wacom HID 4899 Finger" {
+    natural_scroll enabled
+    tap enabled
+}
+
+input * {
+    xkb_layout "de"
+}
+
+#bar {
+#    position top
+#    status_command while ~/.config/sway/status3.sh; do sleep 1; done
+#
+#    colors {
+#        statusline #f8b500
+#        background #2e2e2e
+#    }
+#
+#    font pango:monospace 12
+#}
+
+bar {
+  swaybar_command waybar
+}
+
+
 ####################################
 #     Fonts 
 ####################################
@@ -42,27 +76,24 @@ default_border pixel 1
 # thin borders
 hide_edge_borders both
 
+# Monitor resolution set to 1920x1200
+output eDP-1 resolution 1920x1200
 
-#Enable tap-to-click for touchpad
-exec --no-startup-id xinput set-prop "ALP001C:00 044E:120A Touchpad" "libinput Tapping Enabled" 1
 
-# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
-# screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+# Disable internal screen and use external monitor only
+bindsym $mod+Shift+h output eDP-1 disable
 
-#Monitor resolution set to 1920x1200
-exec --no-startup-id xrandr --output eDP-1 --mode 1920x1080
-
-bindsym $mod+Shift+h exec --no-startup-id xrandr --output eDP-1 --off --output HDMI-1 --auto
-bindsym $mod+Shift+m exec --no-startup-id xrandr --output eDP-1 --same-as HDMI-1 --auto
-
-#extend Monitor
-#bindsym $mod+Shift+x exec --no-startup-id xrandr --output eDP-1 --auto --output HDMI-1 --right-of eDP-1 --auto
+# Enable both screens with the external monitor as extended
+bindsym $mod+Shift+m output eDP-1 enable; output HDMI-A-1 enable
 
 # fireplace
 bindsym $mod+Shift+f exec --no-startup-id ~/scripts/fireplace
 
-#exec --no-startup-id xrandr --output eDP-1 --dpi 180
+# Background
+exec_always --no-startup-id swaybg -i ~/Pictures/mountain1.jpg -m fill
+
+# Notification daemon
+exec dunst
 
 ###############################
 #         Gaps
@@ -315,9 +346,14 @@ bindsym $mod+Shift+w exec --no-startup-id whatsie
 # JDownloader
 bindsym $mod+Shift+j exec ~/scripts/jdownloader
 
-# Screenshot : FlameShot
-bindsym Print exec flameshot full --path ~/Pictures/screenshots
-bindsym $mod+Print exec flameshot gui
+# Screenshot tools
+# Full screenshot
+#bindsym Print exec grim ~/Pictures/screenshots/screenshot_$(date +'%Y-%m-%d_%H-%M-%S').png
+bindsym Print exec grim ~/Pictures/screenshots/screenshot_$(date +'%Y-%m-%d_%H-%M-%S').png && notify-send "Screenshot Taken" "Full-screen screenshot saved"
+
+# Select region screenshot
+#bindsym $mod+Print exec grim -g "$(slurp)" ~/Pictures/screenshots/screenshot_$(date +'%Y-%m-%d_%H-%M-%S').png
+bindsym $mod+Print exec grim -g "$(slurp)" ~/Pictures/screenshots/screenshot_$(date +'%Y-%m-%d_%H-%M-%S').png && notify-send "Screenshot Taken" "Region screenshot saved"
 
 # start a terminal
 bindsym $mod+Return exec --no-startup-id kitty
@@ -328,38 +364,42 @@ bindsym $mod+Shift+b exec blueman-manager
 # Network Manager Applet
 bindsym $mod+Shift+n exec --no-startup-id nm-applet
 
-# Rofi
-bindsym $mod+d exec --no-startup-id rofi -show drun -disable-history -show-icons
-bindsym Mod1+d exec --no-startup-id rofi -show run -disable-history
-bindsym Mod1+w exec rofi -show window -show-icons
-bindsym $mod+w exec rofi -show window -show-icons
-bindsym $mod+i exec rofi -modi emoji -show emoji
+# Wofi
+bindsym $mod+d exec "wofi --show drun"
+bindsym Mod1+d exec "wofi --show run"
+bindsym Mod1+w exec wofi --show window
+bindsym $mod+w exec wofi --show window
+bindsym $mod+i exec "wofi -modi emoji -show emoji"
 
 # kill focused window
 bindsym $mod+q kill
 
 # exit-menu
 #bindsym $mod+Shift+e exec ~/.config/custom_scripts/power.sh
-bindsym $mod+Shift+e exec i3-nagbar -t warning -m 'Are you sure you want to exit i3? This will end your session.' -b 'Yes, exit i3' 'i3-msg exit'
 
 # Lock the system
-bindsym $mod+Shift+l exec "i3lock -i ~/Pictures/lock.png && systemctl suspend"
+bindsym $mod+Shift+l exec "swaylock -i ~/Pictures/lock.png && systemctl suspend"
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r exec swaymsg reload 
 
-# restart i3 inplace (preserves your layout/session, can be used to update i3)
-bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exec swaymsg exit
 
 # Funtions Keys
 # Brightness
 bindsym XF86MonBrightnessUp exec brightnessctl set +10%
 bindsym XF86MonBrightnessDown exec brightnessctl set 10%-
 
+
+# Volume control keybindings
+bindsym XF86AudioRaiseVolume exec amixer -q sset Master 10%+ unmute
+bindsym XF86AudioLowerVolume exec amixer -q sset Master 10%- unmute
+bindsym XF86AudioMute exec amixer -q sset Master toggle
+
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5% 
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5% 
-bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
+#bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5% 
+#bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5% 
+#bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play-pause
@@ -370,36 +410,17 @@ bindsym XF86AudioPrev exec playerctl previous
 #############################################
 # autostart applications/services on login: #
 #############################################
-# xorg commands
-#exec xrandr -s 1920x1080 -r 60
-#exec xset s -dpms
-#exec xset s off
 
-# compositor
-exec picom
-
-# Notification Daemon
-exec dunst
-
-# Polybar
-#exec_always --no-startup-id ~/.config/polybar/i3_bar.sh
-exec_always --no-startup-id polybar example
-
-# nm-applet
 exec nm-applet
-
-# background
-exec nitrogen --restore
-
-# get auth work with polkit
 exec --no-startup-id /usr/lib/mate-polkit/polkit-mate-authentication-agent-1
+exec_always --no-startup-id swaync
 
-# redshift - not working yet
-#bindsym $mod+r exec ~/scripts/redlight-i3
 
-# disable capslock
-# exec setxkbmap -option ctrl:nocaps
-#exec setxkbmap -option caps:escape
+
+# Fixes
+exec dbus-sway-environment
+exec configure-gtk
+exec systemctl --user import-environment
 
 ######################################
 # color settings fo windows         #
