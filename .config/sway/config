@@ -39,6 +39,13 @@ input * {
     xkb_layout "de"
 }
 
+exec swayidle -w \
+    timeout 300 'systemctl suspend' \
+    timeout 600 'systemctl hibernate' \
+    resume 'swaymsg resume' \
+    before-sleep 'swaylock'
+
+
 #bar {
 #    position top
 #    status_command while ~/.config/sway/status3.sh; do sleep 1; done
@@ -391,8 +398,6 @@ bindsym $mod+Shift+x exec "swaylock -i ~/Pictures/lock.png && systemctl suspend"
 
 # reload the configuration file
 bindsym $mod+Shift+r exec swaymsg reload 
-
-#bindsym $mod+Shift+e exec swaymsg exit
 
 # Funtions Keys
 # Brightness

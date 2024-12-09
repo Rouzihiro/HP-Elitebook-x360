@@ -28,7 +28,15 @@ fi
 ZSH_CUSTOM=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
 source ${ZSH_CUSTOM}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# ~/.zshrc configuration file
+
+
+# The following lines were added by compinstall
+zstyle :compinstall filename '~/.zshrc'
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
 
 # Set environment variables
 export scripts="$HOME/scripts"      # Path to your scripts folder
@@ -46,16 +54,34 @@ setopt auto_pushd
 autoload -Uz compinit
 compinit
 
-# Aliases for ease of use
-alias sv="sudo nvim"
-alias v="nvim"
-alias cat="bat"
+
+## Universal
+alias i3config="nvim ~/.config/i3/config"
+alias swayconfig="nvim ~/.config/sway/config"
+alias qconfig="nvim ~/.config/qtile/config.py"
+alias polyconfig="nvim ~/.config/polybar/config.ini"
+alias wayconfig="nvim ~/.config/waybar/config.ini"
+alias fetchconfig="nvim ~/.config/neofetch/config.conf"
+alias kitconfig="nvim ~/.config/kitty/kitty.conf"
 alias ls="eza --icons"
+alias la="ls -la"
+alias lst="ls --tree"
+alias neodir="cd ~/.config/nvim"
+alias sv="sudoedit"
+alias v="nvim"
+
+alias zsource="source .zshrc"
+alias xx="exit"
+alias ai="tgpt"
+alias gg="fg"
+alias ins='nvim $(fzf -m --preview="bat --theme=gruvbox-dark --color=always {}")'
+
+# Aliases for ease of use
+alias cat="bat"
 alias ll="eza -lh --icons --grid --group-directories-first"
-alias la="eza -lah --icons --grid --group-directories-first"
+#alias la="eza -lah --icons --grid --group-directories-first"
 alias ".."="cd .."
 alias cls="clear"
-
 alias md="mkdir"
 
 alias rey-weatherHH="curl -4 http://wttr.in/Hamburg"
